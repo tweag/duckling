@@ -82,17 +82,17 @@ ruleAbsorbOnADOW = Rule
       _ -> Nothing
   }
 
-ruleAbsorbInMonth :: Rule
-ruleAbsorbInMonth = Rule
-  { name = "in <named-month>"
-  , pattern =
-    [ regex "in"
-    , Predicate isAMonth
-    ]
-  , prod = \tokens -> case tokens of
-      (_:token:_) -> Just token
-      _ -> Nothing
-  }
+--ruleAbsorbInMonth :: Rule
+--ruleAbsorbInMonth = Rule
+--  { name = "in <named-month>"
+--  , pattern =
+--    [ regex "in"
+--    , Predicate isAMonth
+--    ]
+--  , prod = \tokens -> case tokens of
+--      (_:token:_) -> Just token
+--      _ -> Nothing
+--  }
 
 ruleAbsorbCommaTOD :: Rule
 ruleAbsorbCommaTOD = Rule
@@ -382,7 +382,20 @@ ruleDOMOfMonth = Rule
   { name = "<day-of-month> (ordinal or number) of <named-month>"
   , pattern =
     [ Predicate isDOMValue
-    , regex "of|in"
+    , regex "of"  -- taken out "in" preposition
+    , Predicate isAMonth
+    ]
+  , prod = \tokens -> case tokens of
+      (token:_:Token Time td:_) -> Token Time <$> intersectDOM td token
+      _ -> Nothing
+  }
+
+ruleDOMInMonth :: Rule
+ruleDOMInMonth = Rule
+  { name = "<day-of-month> (ordinal) in <named-month>"
+  , pattern =
+    [ Predicate isDOMOrdinal
+    , regex "in"
     , Predicate isAMonth
     ]
   , prod = \tokens -> case tokens of
@@ -1499,7 +1512,7 @@ rules =
   , ruleIntersectOf
   , ruleAbsorbOnTime
   , ruleAbsorbOnADOW
-  , ruleAbsorbInMonth
+  --, ruleAbsorbInMonth
   , ruleAbsorbCommaTOD
   , ruleNextDOW
   , ruleThisTime
@@ -1522,6 +1535,7 @@ rules =
   , ruleMonthDOMNumeral
   , ruleDOMMonth
   , ruleDOMOfMonth
+  , ruleDOMInMonth
   , ruleDOMOrdinalMonthYear
   , ruleIdesOfMonth
   , ruleTODLatent

@@ -26,7 +26,7 @@ ruleEmailSpelledOut :: Rule
 ruleEmailSpelledOut = Rule
   { name = "email spelled out"
   , pattern =
-    [ regex "([\\w\\._+-]+) at ([\\w_-]+(\\.[\\w_-]+)+)"
+    [ regex "([\\w\\._+-]+) at ([\\w_-]+\\.(com|nl|co\\.uk|be|fr|net|io|org)+)"
     ]
   , prod = \xs -> case xs of
       (Token RegexMatch (GroupMatch (m1:m2:_)):_) ->

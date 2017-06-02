@@ -34,6 +34,7 @@ negativeCorpus = (testContext, examples)
       , "25"
       , "this is the one"
       , "in 61"
+      , "household 01"
       ]
 
 allExamples :: [Example]
@@ -748,7 +749,7 @@ allExamples = concat
              ]
   , examples (datetime (2013, 3, 1, 0, 0, 0) Month)
              [ "March"
-             , "in March"
+          --   , "in March"
              ]
   , examples (datetime (2013, 2, 13, 17, 0, 0) Hour)
              [ "tomorrow afternoon at 5"
