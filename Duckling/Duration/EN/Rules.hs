@@ -138,6 +138,50 @@ ruleDurationPrecision = Rule
         _ -> Nothing
   }
 
+ruleIntegerUnitofdurationInterval :: Rule
+ruleIntegerUnitofdurationInterval = Rule
+  { name = "<integer>-<unit-of-duration> intervals"
+  , pattern =
+    [ Predicate isNatural
+    , regex "-?"
+    , dimension TimeGrain
+    , regex "interval(s)?"
+    ]
+  , prod = \tokens -> case tokens of
+      (Token Numeral (NumeralData {TNumeral.value = v}):_:
+       Token TimeGrain grain:
+       _) -> Just . Token Duration . duration grain $ floor v
+      _ -> Nothing
+  }
+
+rulePerIntegerUnitofduration :: Rule
+rulePerIntegerUnitofduration = Rule
+  { name = "per <integer> <unit-of-duration>"
+  , pattern =
+    [ regex "[p|P]er"
+    , Predicate isNatural
+    , dimension TimeGrain
+    ]
+  , prod = \tokens -> case tokens of
+      (_:Token Numeral (NumeralData {TNumeral.value = v}):
+       Token TimeGrain grain:
+       _) -> Just . Token Duration . duration grain $ floor v
+      _ -> Nothing
+  }
+
+rulePerUnitofduration :: Rule
+rulePerUnitofduration = Rule
+  { name = "per <unit-of-duration>"
+  , pattern =
+    [ regex "[p|P]er"
+    , dimension TimeGrain
+    ]
+  , prod = \tokens -> case tokens of
+      (_:Token TimeGrain grain:
+       _) ->  Just . Token Duration $ duration grain 1
+      _ -> Nothing
+  }
+
 rules :: [Rule]
 rules =
   [ ruleDurationQuarterOfAnHour
@@ -150,4 +194,7 @@ rules =
   , ruleDurationA
   , ruleDurationPrecision
   , ruleNumeralQuotes
+  , ruleIntegerUnitofdurationInterval
+  , rulePerIntegerUnitofduration
+  , rulePerUnitofduration
   ]
