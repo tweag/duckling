@@ -58,23 +58,36 @@ ruleIntersectOf = Rule
       _ -> Nothing
   }
 
-ruleAbsorbOnTime :: Rule
-ruleAbsorbOnTime = Rule
-  { name = "on <date>"
+ruleIntersectOn :: Rule
+ruleIntersectOn = Rule
+  { name = "intersect by \"on\""
   , pattern =
-    [ regex "on"
-    , dimension Time
+    [ Predicate isNotLatent
+    , regex "on"
+    , Predicate isNotLatent
     ]
   , prod = \tokens -> case tokens of
-      (_:token:_) -> Just token
+      (Token Time td1:_:Token Time td2:_) -> Token Time <$> intersect td1 td2
       _ -> Nothing
   }
 
-ruleAbsorbOnADOW :: Rule
-ruleAbsorbOnADOW = Rule
-  { name = "on a <named-day>"
+--ruleAbsorbOnTime :: Rule
+--ruleAbsorbOnTime = Rule
+--  { name = "on <date>"
+--  , pattern =
+--    [ regex "on"
+--    , dimension Time
+--    ]
+--  , prod = \tokens -> case tokens of
+--      (_:token:_) -> Just token
+--      _ -> Nothing
+--  }
+
+ruleAbsorbADOW :: Rule
+ruleAbsorbADOW = Rule
+  { name = "a <named-day>"
   , pattern =
-    [ regex "on a"
+    [ regex "a"
     , Predicate isADayOfWeek
     ]
   , prod = \tokens -> case tokens of
@@ -1510,8 +1523,9 @@ rules :: [Rule]
 rules =
   [ ruleIntersect
   , ruleIntersectOf
-  , ruleAbsorbOnTime
-  , ruleAbsorbOnADOW
+  , ruleIntersectOn
+  --, ruleAbsorbOnTime
+  , ruleAbsorbADOW
   --, ruleAbsorbInMonth
   , ruleAbsorbCommaTOD
   , ruleNextDOW

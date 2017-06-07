@@ -108,16 +108,16 @@ allExamples = concat
              , "2015-03-03"
              ]
   , examples (datetime (2013, 2, 15, 0, 0, 0) Day)
-             [ "on the 15th"
-             , "the 15th of february"
+             [ "the 15th of february"
              , "15 of february"
              , "february the 15th"
              , "february 15"
              , "15th february"
              , "2/15"
-             , "on 2/15"
+    --         , "on 2/15"
              , "February 15"
              , "2 / 15"
+    --         , "on the 15th"
              ]
   , examples (datetime (2013, 8, 8, 0, 0, 0) Day)
              ["Aug 8"]
@@ -335,7 +335,8 @@ allExamples = concat
   , examples (datetime (2013, 2, 16, 9, 0, 0) Hour)
              ["at 9am on Saturday"]
   , examples (datetime (2013, 2, 16, 9, 0, 0) Hour)
-             ["on Saturday for 9am"]
+        --     ["on Saturday for 9am"]
+             ["Saturday for 9am"]
   , examples (datetime (2014, 7, 18, 19, 0, 0) Minute)
              ["Fri, Jul 18, 2014 07:00 PM"]
   , examples (datetime (2013, 2, 12, 4, 30, 1) Second)
@@ -761,7 +762,8 @@ allExamples = concat
              [ "1pm-2pm tomorrow"
              ]
   , examples (datetime (2013, 3, 1, 0, 0, 0) Day)
-             [ "on the first"
+  --           [ "on the first"
+             [ "the first"
              , "the 1st"
              ]
   , examples (datetime (2013, 2, 12, 10, 30, 0) Minute)
