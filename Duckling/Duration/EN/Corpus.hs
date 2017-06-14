@@ -32,6 +32,8 @@ negativeCorpus = (testContext, examples)
       , "secretary"
       , "minutes"
       , "I second that"
+      , "How"
+      , "How are you"
       ]
 
 allExamples :: [Example]

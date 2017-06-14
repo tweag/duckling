@@ -44,13 +44,14 @@ exactSecondTests = testCase "Exact Second Tests" $
   where
     context = testContext {referenceTime = refTime (2016, 12, 6, 13, 21, 42) 1}
     xs = concat
-      [ examples (datetime (2016, 12, 6, 13, 21, 45) Second)
-                 [ "in 3 seconds"
-                 ]
-      , examples (datetime (2016, 12, 6, 13, 31, 42) Second)
-                 [ "in ten minutes"
-                 ]
-      , examples (datetimeInterval ((2016, 12, 6, 13, 21, 42), (2016, 12, 12, 0, 0, 0)) Second)
+  --    [ examples (datetime (2016, 12, 6, 13, 21, 45) Second)
+  --               [ "in 3 seconds"
+  --               ]
+  --    , examples (datetime (2016, 12, 6, 13, 31, 42) Second)
+  --               [ "in ten minutes"
+  --               ]
+  --    , 
+      [ examples (datetimeInterval ((2016, 12, 6, 13, 21, 42), (2016, 12, 12, 0, 0, 0)) Second)
                  [ "by next week"
                  , "by Monday"
                  ]

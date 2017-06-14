@@ -16,6 +16,6 @@ allDimensions :: [Some Dimension]
 allDimensions =
   [ This Email
   , This AmountOfMoney
-  , This PhoneNumber
-  , This Url
+--  , This PhoneNumber
+--  , This Url
   ]

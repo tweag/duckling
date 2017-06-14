@@ -1443,7 +1443,8 @@ ruleDurationInWithinAfter :: Rule
 ruleDurationInWithinAfter = Rule
   { name = "in|within|after <duration>"
   , pattern =
-    [ regex "(in|within|after)"
+--    [ regex "(in|within|after)"
+    [ regex "(within|after)"
     , dimension Duration
     ]
   , prod = \tokens -> case tokens of
@@ -1453,7 +1454,7 @@ ruleDurationInWithinAfter = Rule
          "within" -> Token Time <$>
            interval TTime.Open (cycleNth TG.Second 0) (inDuration dd)
          "after" -> tt . withDirection TTime.After $ inDuration dd
-         "in" -> tt $ inDuration dd
+--         "in" -> tt $ inDuration dd
          _ -> Nothing
       _ -> Nothing
   }
@@ -1474,18 +1475,18 @@ ruleDurationHenceAgo = Rule
       _ -> Nothing
   }
 
-ruleInNumeral :: Rule
-ruleInNumeral = Rule
-  { name = "in <number> (implicit minutes)"
-  , pattern =
-    [ regex "in"
-    , Predicate $ isIntegerBetween 0 60
-    ]
-  , prod = \tokens -> case tokens of
-      (_:Token Numeral (NumeralData {TNumeral.value = v}):_) ->
-        tt . inDuration . duration TG.Minute $ floor v
-      _ -> Nothing
-  }
+--ruleInNumeral :: Rule
+--ruleInNumeral = Rule
+--  { name = "in <number> (implicit minutes)"
+--  , pattern =
+--    [ regex "in"
+--    , Predicate $ isIntegerBetween 0 60
+--    ]
+--  , prod = \tokens -> case tokens of
+--      (_:Token Numeral (NumeralData {TNumeral.value = v}):_) ->
+--        tt . inDuration . duration TG.Minute $ floor v
+--      _ -> Nothing
+--  }
 
 ruleDurationAfterBeforeTime :: Rule
 ruleDurationAfterBeforeTime = Rule
@@ -1617,7 +1618,7 @@ rules =
   , ruleDurationInWithinAfter
   , ruleDurationHenceAgo
   , ruleDurationAfterBeforeTime
-  , ruleInNumeral
+--  , ruleInNumeral
   , ruleTimezone
   ]
   ++ ruleInstants

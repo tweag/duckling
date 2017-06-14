@@ -61,11 +61,13 @@ rankFilterTest = testCase "Rank Filter Tests" $ do
   mapM_ check
     [ ( "in 2 minutes"
       , [This Numeral, This Duration, This Time]
-      , [This Time]
+  --    , [This Time]
+      , [This Duration]
       )
     , ( "in 2 minutes, about 42 degrees"
       , [This Numeral, This Temperature, This Time]
-      , [This Time, This Temperature]
+  --    , [This Time, This Temperature]
+      , [This Duration, This Temperature]
       )
     , ( "today works... and tomorrow at 9pm too"
       , [This Numeral, This Time]
